@@ -1,10 +1,13 @@
 $( document ).ready(function(){
     let searchBtn = $("button");
+    let resultMessage = $("#results")
     
 
     searchBtn.click(function() {
-        $.get(`http://localhost/info2180-lab4/superheroes.php`, function(result){
-            alert(result);
-        })
+        let searchVal = $("#search").val().trim();
+        $.get(`http://localhost/info2180-lab4/superheroes.php?q=${searchVal}`, function(result){
+            resultMessage.html(result);
+         })
+
     });
 });

@@ -4,6 +4,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header("Access-Control-Allow-Headers: X-Requested-With");
 
+$query =  $_GET["q"];
+
+
 $superheroes = [
   [
       "id" => 1,
@@ -67,10 +70,31 @@ $superheroes = [
   ], 
 ];
 
+
 ?>
 
-<ul>
+
+
+
+<?php $heroFound = false; ?>
 <?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
+    <?php if ($superhero['alias'] == $query or $superhero['name'] == $query): ?>
+        <?php $heroFound = true; ?>
+        <h3><?= $superhero['alias']; ?></h3>
+        <h4> A.K.A <?= $superhero['name']; ?></h4>
+        <p><?= $superhero['biography']; ?></p>
+    <?php endif; ?>    
 <?php endforeach; ?>
-</ul>
+
+<?php if ($heroFound == false and !empty($query)): ?>
+        <h2>SUPERHERO NOT FOUND</h2>
+<?php endif; ?>
+
+<?php if (empty($query)): ?>
+    <h3>Full List</h3>
+    <ul>
+    <?php foreach ($superheroes as $superhero): ?>
+        <li><?= $superhero['alias']; ?></li>
+    <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
